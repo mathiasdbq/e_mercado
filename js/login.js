@@ -59,7 +59,7 @@ formLogin.addEventListener('submit',function(evento){
         noerror('email') 
     } else if (loginEmail.value.length > 7 && logincontrasena.value.length > 8){
         evento.preventDefault();
-        window.location.href= 'inicio.html';
+        window.location.href= 'https://mathiasdbq.github.io/e_mercado/inicio.html';
     }
 });
 
