@@ -271,3 +271,14 @@ a.custom-card:hover {
   margin-bottom: 4px;
   font-size: 0.8rem;
  }
+
+#login-google {
+  color: #0087F7;
+  cursor: pointer;
+}
+  #login-google:hover{
+    color: #0D6EFD;
+  }
+  #login-google:active{
+    color: #0B5ED7;
+  }
