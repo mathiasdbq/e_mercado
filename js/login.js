@@ -76,7 +76,7 @@ formLogin.addEventListener('submit',function(evento){
         evento.preventDefault();
         noerror('email');
         noerror('contrasena');
-        //window.location.href='./inicio.html';
+        window.location.href='./inicio.html';
     }
 });
 
