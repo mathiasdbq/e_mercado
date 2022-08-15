@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function(){
     fetch(PRODUCT_INFO_URL)
     .then(response => response.json())
     .then(data => {
+        console.log(data)
         header()
         product (data)
          })
@@ -65,12 +66,12 @@ function createLetter (list,number) {
     containerTitle.classList.add('justify-content-between');
  
     let title = document.createElement('h4');
-    title.textContent = list.products[number].name;
+    title.textContent = list.products[number].name +' - ' + list.products[number].currency + list.products[number].cost;
     title.classList.add('mb-1');
 
     let cantidad = document.createElement('small');
-    cantidad.textContent = list.products[number].soldCount;
-    title.classList.add('text-muted');
+    cantidad.textContent = list.products[number].soldCount + ' ' + 'vendidos';
+    cantidad.classList.add('text-muted');
   
     let description = document.createElement('p');
     description.classList.add('mb-1');
