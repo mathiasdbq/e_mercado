@@ -15,20 +15,22 @@ formLogin.addEventListener('submit',function(evento){
             errorEmail.innerHTML = 'ingresa tu e-mail' ;
             loginEmail.style.border = 'red solid 0.5px';
             loginEmail.style.marginTop = '-24px'
+            loginEmail.style.marginBottom = '0';
             imgLoginEmail.style.display = 'block';
         } else if (contenido == 'contrasena') {
             evento.preventDefault();
             errorContasena.style.display = 'block' ;
             errorContasena.innerHTML = 'ingresa una contraseña' ;
             logincontrasena.style.border = 'red solid 0.5px';
-            logincontrasena.style.marginTop = '-24px'
+            logincontrasena.style.marginTop = '-24px';
             imgLoginpassword.style.display = 'block';
         } else if (contenido == 'contrasenaCorta') {
             evento.preventDefault();
             errorContasena.style.display = 'block' ;
             errorContasena.innerHTML = 'ingresa una contraseña mayor a 8 caracteres' ;
             logincontrasena.style.border = 'red solid 0.5px';
-            logincontrasena.style.marginTop = '-24px'
+            logincontrasena.style.marginTop = '-24px';
+            logincontrasena.style.marginBottom = '0';
             imgLoginpassword.style.display = 'block';
         }
     };
@@ -38,14 +40,16 @@ formLogin.addEventListener('submit',function(evento){
             evento.preventDefault();
             errorEmail.style.display = 'none' ;
             loginEmail.style.border = 'solid 0.5px #CFD4DA';
-            loginEmail.style.marginTop = '0'
+            loginEmail.style.marginTop = '0';
+            loginEmail.style.marginBottom = '10px';
             imgLoginEmail.style.display = 'none';
 
         } else if (contenido == 'contrasena') {
             evento.preventDefault();
             errorContasena.style.display = 'none' ;
             logincontrasena.style.border = 'solid 0.5px #CFD4DA';
-            logincontrasena.style.marginTop = '0'
+            logincontrasena.style.marginTop = '0';
+            logincontrasena.style.marginBottom = '14px';
             imgLoginpassword.style.display = 'none';
         }
     }
@@ -72,7 +76,7 @@ formLogin.addEventListener('submit',function(evento){
         evento.preventDefault();
         noerror('email');
         noerror('contrasena');
-        window.location.href='./inicio.html';
+        //window.location.href='./inicio.html';
     }
 });
 
