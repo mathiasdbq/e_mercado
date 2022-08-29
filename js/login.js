@@ -76,6 +76,7 @@ formLogin.addEventListener('submit',function(evento){
         evento.preventDefault();
         noerror('email');
         noerror('contrasena');
+        localStorage.setItem('usuario', loginEmail.value);
         window.location.href='./inicio.html';
     }
 });
@@ -111,6 +112,7 @@ function logearseGoogle () {
   signInWithPopup(auth, provider)
   .then((result) => {
     console.log(result)
+    localStorage.setItem('usuario', result.user.displayName);
     window.location.href='./inicio.html';
   }).catch((error) => {
     // Handle Errors here.

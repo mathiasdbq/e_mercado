@@ -39,3 +39,18 @@ let getJSONData = function(url){
         return result;
     });
 }
+
+// usuario 
+let liNav = document.getElementById('li-nav');
+let hrefInicio = document.createElement ('a');
+hrefInicio.classList.add('nav-link');
+hrefInicio.style.cursor = ('pointer');
+let usuariolocalStorage = localStorage.getItem('usuario');
+liNav.appendChild (hrefInicio);
+
+if (localStorage.getItem('usuario')){
+    hrefInicio.textContent = usuariolocalStorage;
+} else {
+    hrefInicio.textContent = 'iniciar secion';
+    hrefInicio.href = './index.html'
+};
