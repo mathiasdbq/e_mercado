@@ -287,3 +287,24 @@ a.custom-card:hover {
   translate: 130px 6px;
   display: none;
 }
+
+/* comentarios de los productos */
+.cont {
+  overflow: auto;
+  height: 200px;
+}
+
+.newClasProducts {
+  background-color: white;
+  border-color: black;
+  border: 1px;
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #dee2e6!important;
+
+}
+
+.noChequed {
+  color:#95BEFC;
+}

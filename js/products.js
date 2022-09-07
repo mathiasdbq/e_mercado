@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function(){
     const PRODUCT_INFO_URL = "https://japceibal.github.io/emercado-api/cats_products/"+ localStorage.getItem('catID') +".json";
-
+    
     fetch(PRODUCT_INFO_URL)
     .then(response => response.json())
     .then(data => {
@@ -186,6 +186,10 @@ function createLetter (list,number) {
     card.classList.add('list-group-item');
     card.classList.add('list-group-item-action');
     card.classList.add('cursor-active');
+    card.addEventListener('click', function(){
+        localStorage.setItem('Product', list[number].id);
+        window.location.href = './product-info.html'
+    })
 
     let content = document.createElement('div');
     content.classList.add('row');
