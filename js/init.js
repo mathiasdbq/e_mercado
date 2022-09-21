@@ -42,15 +42,60 @@ let getJSONData = function(url){
 
 // usuario 
 let liNav = document.getElementById('li-nav');
-let hrefInicio = document.createElement ('a');
-hrefInicio.classList.add('nav-link');
-hrefInicio.style.cursor = ('pointer');
+let hrefInicio = document.createElement ('ul');
+hrefInicio.classList.add('submenu')
+hrefInicio.style.marginTop = "12px"
+liNav.classList.add('nav-link');
+liNav.classList.add('ul-Nav-link');
+liNav.style.cursor = ('pointer');
 let usuariolocalStorage = localStorage.getItem('usuario');
+liNav.innerHTML = `<a style="padding-right: 40px;">${usuariolocalStorage}</a>`
 liNav.appendChild (hrefInicio);
 
 if (localStorage.getItem('usuario')){
-    hrefInicio.textContent = usuariolocalStorage;
+
+  let miCarrito = document.createElement ('li')
+  let miCarritoA = document.createElement ('a')
+  miCarritoA.href = './cart.html'
+  miCarritoA.textContent = 'Mi carrito'
+  miCarrito.appendChild(miCarritoA)
+  miCarritoA.classList.add('nav-link');
+  miCarrito.style.display = "none"
+
+  let miPerfil = document.createElement ('li')
+  let miPerfilA = document.createElement ('a')
+  miPerfilA.href = './my-profile.html'
+  miPerfilA.textContent = 'Mi perfil'
+  miPerfil.appendChild(miPerfilA)
+  miPerfilA.classList.add('nav-link');
+  miPerfil.style.display = "none"
+
+  let cerrarSesion = document.createElement ('li')
+  cerrarSesion.textContent = 'Cerrar sesión'
+  cerrarSesion.classList.add('nav-link');
+  cerrarSesion.style.display = "none"
+  cerrarSesion.addEventListener('click',()=>{
+    localStorage.removeItem('usuario');
+    window.location.href ='./index.html'})
+
+    hrefInicio.appendChild(miCarrito)
+    hrefInicio.appendChild(miPerfil)
+    hrefInicio.appendChild(cerrarSesion)
+    liNav.addEventListener('click',()=>{
+      if(miCarrito.style.display === "block" && miPerfil.style.display === "block" && cerrarSesion.style.display === "block"){
+        miCarrito.style.display = "none"
+        miPerfil.style.display = "none"
+        cerrarSesion.style.display = "none"
+        liNav.style.backgroundColor = "transparent"
+      } else {
+      liNav.style.backgroundColor = "#5c636a"
+      miCarrito.style.display = "block"
+      miPerfil.style.display = "block"
+      cerrarSesion.style.display = "block"
+      }
+    })
 } else {
-    hrefInicio.textContent = 'iniciar secion';
-    hrefInicio.href = './index.html'
+  liNav.innerHTML = `<a class="nav-link" href='./index.html' >iniciar secion</a>`;
+
+  hrefInicio.appendChild(redireccionInicio)
 };

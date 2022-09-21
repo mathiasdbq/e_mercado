@@ -308,3 +308,33 @@ a.custom-card:hover {
 .noChequed {
   color:#95BEFC;
 }
+
+.submenu{
+  width: 155px;
+  position: absolute;
+  background-color: #212529;
+}
+
+.rating-container{
+  transform: rotateY(180deg);
+}
+
+input.star{
+  display: none;
+}
+
+label.labelStar{
+  color: #0087F7;
+  font-size: 25px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+label.labelStar:not(:last-child){
+  margin-right: 5px;
+}
+
+input.star:checked ~ label,
+input.star:hover ~ label{
+  color: orange;
+}
