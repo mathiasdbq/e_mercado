@@ -80,14 +80,14 @@ function crearCuerpo(data){
         </div>
         <hr>
         <h3> Productos relacinados </h3>
-        <div id="relacionados" style="display: flex;flex-direction: row;flex-wrap: wrap;"> </div>`
+        <div id="relacionados" style="display: flex;flex-direction: row;flex-wrap: wrap;gap: 5px;"> </div>`
 
     for (let i = 0; i < imgs.length; i++) {
         let newdocument = document.createElement('img');
         newdocument.src = data.images[i];
         newdocument.alt = data.description;
         newdocument.classList.add('img-thumbnail');
-        newdocument.classList.add('hover-gris');
+        newdocument.classList.add('hover-carrusel');
         newdocument.style.borderRadius ="8px"
     
         newdocument.addEventListener('click',()=>{
@@ -109,6 +109,7 @@ function crearCuerpo(data){
         imageRelated.src = datos.relatedProducts[i].image;
         imageRelated.style.width = "228px"
         divRelated.classList.add('img-thumbnail');
+        divRelated.classList.add('hover-related')
         
         let tituloRelated = document.createElement('h7')
         tituloRelated.innerHTML = datos.relatedProducts[i].name

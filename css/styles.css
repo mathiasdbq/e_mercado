@@ -338,3 +338,26 @@ input.star:checked ~ label,
 input.star:hover ~ label{
   color: orange;
 }
+
+.hover-carrusel{
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  max-width: 100%;
+  height: auto;
+}
+
+.hover-carrusel:hover{
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  cursor: pointer;
+}
+
+.hover-related:hover{
+  border: solid 2px #95BEFC;
+  margin: -2px;
+  margin-left: -1px;
+  margin-right: -1px;
+  cursor: pointer;
+}
