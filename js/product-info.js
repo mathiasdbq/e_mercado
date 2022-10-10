@@ -28,8 +28,10 @@ let liContenedor;
 function crearCuerpo(data){
     cuerpo.innerHTML = 
         `<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <div class=" p-4" style='padding-left: 0px!important;'>
-            <h2> ${data.name}</h2>
+        <div id ='encavezado' style="display: flex;justify-content: space-between;flex-direction: row;flex-wrap: wrap;align-items: center;">
+            <div class=" p-4" style='padding-left: 0px!important;'>
+                <h2> ${data.name}</h2>
+            </div>
         </div>
         <hr>
         <h4> precio </h4>
@@ -81,6 +83,59 @@ function crearCuerpo(data){
         <hr>
         <h3> Productos relacinados </h3>
         <div id="relacionados" style="display: flex;flex-direction: row;flex-wrap: wrap;gap: 5px;"> </div>`
+    
+    class Compras {
+    constructor(currency,image,name,unitCost, count){
+            this.count = count;
+            this.currency = currency;
+            this.id = '';
+            this.image = image;
+            this.name = name;
+            this.unitCost = unitCost;
+        };
+    };
+    let div = document.createElement('div');
+    div.id = 'boton-Comprar';
+    let carrito = []
+    div.addEventListener('click',agregarCarrito);
+
+    function agregarCarrito(){
+        let nombre = data.name
+        nombre = new Compras (`${data.currency}`,`${imgs[0]}`,`${data.name}`,`${data.cost}`, 1)
+        
+        if(localStorage.getItem('Compras') != null){
+            for (let i = 0; i < JSON.parse(localStorage.getItem('Compras')).length; i++) {
+                if(JSON.parse(localStorage.getItem('Compras'))[i].name === `${data.name}`){
+                    div.removeEventListener('click',agregarCarrito)
+                    div.innerHTML = '';
+                    p.textContent = 'Comprado';
+                    div.appendChild(p);
+
+                    return
+                };
+            };
+        };
+
+        if (localStorage.getItem('Compras') != null) {
+            carrito = JSON.parse(localStorage.getItem('Compras'));
+            carrito.push(nombre);
+            localStorage.setItem('Compras', (JSON.stringify(carrito))); 
+        } else {
+            carrito.push(nombre)
+            localStorage.setItem('Compras', (JSON.stringify(carrito)));
+        }
+        p.textContent = 'Comprado';
+        console.log(carrito)
+
+    };
+
+    let p = document.createElement('p');
+    p.textContent = 'Comprar';
+
+    let divEncavezado = document.getElementById('encavezado');
+    divEncavezado.appendChild(div);
+    div.appendChild(p);
+
 
     for (let i = 0; i < imgs.length; i++) {
         let newdocument = document.createElement('img');
@@ -176,8 +231,8 @@ function comentar(){
     else if (star5.checked){stars = `<span class="fa fa-star checked"></span> <span class=" fa fa-star checked"></span> <span class=" fa fa-star checked"></span> <span class=" fa fa-star checked"></span> <span class="fa fa-star  checked"></span>`
         textAlerta.innerHTML = ''}
 
-    if(fecha.getMonth() + 1 .length != 2){ mes = '0' + mes};
-    if(fecha.getDate() .length != 2){ dia = '0' + dia};
+    //if((fecha.getMonth() + 1).length != 2){ mes = '0' + mes};
+    //if(fecha.getDate().length != 2){ dia = '0' + dia};
 
     if (input.value != '' ){
         liContenedor.innerHTML += `

@@ -361,3 +361,34 @@ input.star:hover ~ label{
   margin-right: -1px;
   cursor: pointer;
 }
+.tabla-carrito,.tabla-carrito th{
+  border-bottom: solid 1px black;
+  padding-bottom: 5px;
+  margin-top: 20px;
+}
+
+.tabla-carrito td{
+  border-bottom: solid 1px #CFD4DA;
+  padding-bottom: 10px;
+  padding-top: 5px;
+}
+
+#boton-Comprar{
+  cursor: pointer;
+  width:100px;
+  height: 41px;
+  background-color: #90C8AC; 
+  margin-right: 30px;
+  color: white;
+  border:0px;
+  border-radius: 8px;
+  text-align: center;
+  padding: 10px;
+}
+
+ #boton-Comprar:active{
+  
+  border-radius: 8px;
+  border: solid 5px #95BEFC;
+  padding: 5px;
+ }
