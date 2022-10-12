@@ -8,11 +8,86 @@ document.addEventListener('DOMContentLoaded', function(){
         imgs = data.images;
         datos = data
         crearCuerpo(data);
-        console.log(data.relatedProducts);
         fetch(PRODUCT_INFO_COMMENTS_URL)
         .then(response => response.json())
         .then(info => {
             crearComentarios(info);
+
+          /*  *****///empieza///***** */
+
+          let containerSlider = document.createElement('div')
+containerSlider.style = ` 
+    width: 90%;
+    max-width: 765px;
+    margin: auto;
+    overflow: hidden;
+    box-shadow: 0 0 0 10px #fff,
+                0 15px 50px;
+    position: relative;
+    border-radius: 3px;`
+
+let slider = document.createElement('div')
+slider.id = 'slider'
+slider.classList.add('slider')
+slider.style = `
+    display: flex;
+    width: 400%;
+    height: 400px;
+    margin-left: -100%;`
+
+document.querySelector('#carruselImg').appendChild(containerSlider)
+containerSlider.appendChild(slider)
+
+        agregarContenido(data);
+
+        let sliderSection = document.querySelectorAll('.slider-section')
+        let sliderSectionLast = sliderSection[sliderSection.length-1]
+    
+        const btnLeft = document.getElementById('slider-left')
+        btnLeft.addEventListener('click',function(){Back();})
+ 
+
+        const btnRight = document.getElementById('slider-right')
+        btnRight.addEventListener('click',Next)
+    
+        slider.insertAdjacentElement('afterbegin', sliderSectionLast)
+
+function agregarContenido(data){
+    for (let i = 0; i < data.images.length; i++) {
+        slider.innerHTML += `
+            <div id='imagen-${i}' class='slider-section' style'width: 100%;'>
+                <img src=${data.images[i]} style=' display: block; width: 100%; height: 100%; object-fit: cover;'>
+            </div>`
+    }
+    slider.innerHTML += `
+    <div class="slider-btn slider-left" id="slider-left" style=' left: 10px; position: absolute; width: 40px; height: 40px; background-color: rgba(255, 255, 255, 0.7); top: 50%; transform: translateY(-50%); font-size: 30px; font-weight: bold; font-family: monospace; text-align: center; border-radius: 50%; cursor: pointer;'>&#60</div>
+
+    <div class="slider-btn slider-right" id="slider-right" style=' right: 10px; position: absolute; width: 40px; height: 40px; background-color: rgba(255, 255, 255, 0.7); top: 50%; transform: translateY(-50%); font-size: 30px; font-weight: bold; font-family: monospace; text-align: center; border-radius: 50%; cursor: pointer;'>&#62</div>`
+}
+
+function Next(){
+    let sliderSectionFirst = document.querySelectorAll('.slider-section')[0]
+    slider.style.marginLeft = '-200%'
+    slider.style.transition = 'all 0.3s'
+    setTimeout(function(){
+        slider.style.transition = '0.0s'
+        slider.insertAdjacentElement('beforeend', sliderSectionFirst)
+        slider.style.marginLeft = '-100%'
+    }, 500);
+}
+
+function Back(){
+    let sliderSection = document.querySelectorAll('.slider-section')
+    let sliderSectionLast = sliderSection[sliderSection.length-1]
+    slider.style.marginLeft = '0%'
+    slider.style.transition = 'all 0.3s'
+    setTimeout(function(){
+        slider.style.transition = '0.0s'
+        slider.insertAdjacentElement('afterbegin', sliderSectionLast)
+        slider.style.marginLeft = '-100%'
+    }, 500);
+}
+        //********* */termina/* *********//
         });
     });  
 });
@@ -44,9 +119,9 @@ function crearCuerpo(data){
         <p>${data.soldCount}</p>
         <h4>imagenes ilustrativas</h4>
         <div style="display: flex;align-items: center;flex-direction: column;">
-        <div style="display: flex;flex-direction: column;gap: 10px;">
+        <div style="display: flex;flex-direction: column;gap: 50px;margin-bottom: 53px;margin-top: 26px;">
         <div id='products-img' class="col-3" style="display:flex;flex-direction: row;align-items: center;max-width: 100px;gap: 5px;"> </div>
-        <div id="carruselImg" style="max-width: 700px;"><img src="${imgs[0]}" alt="" style="width: 100%;border-radius: 5px;"></img></div>
+        <div id="carruselImg" style="max-width: 700px;"></div>
         </div>
         </div>
         <h3 class=" p-4" style='padding-left: 0px!important;'> Comentarios </h3>
@@ -96,21 +171,25 @@ function crearCuerpo(data){
     };
     let div = document.createElement('div');
     div.id = 'boton-Comprar';
-    let carrito = []
     div.addEventListener('click',agregarCarrito);
+    
+    let carrito = []
+    if(localStorage.getItem('Compras') != null)
+    {carrito = JSON.parse(localStorage.getItem('Compras'));}
 
     function agregarCarrito(){
         let nombre = data.name
         nombre = new Compras (`${data.currency}`,`${imgs[0]}`,`${data.name}`,`${data.cost}`, 1)
-        
+
+
         if(localStorage.getItem('Compras') != null){
             for (let i = 0; i < JSON.parse(localStorage.getItem('Compras')).length; i++) {
                 if(JSON.parse(localStorage.getItem('Compras'))[i].name === `${data.name}`){
-                    div.removeEventListener('click',agregarCarrito)
-                    div.innerHTML = '';
-                    p.textContent = 'Comprado';
-                    div.appendChild(p);
+                    console.log(carrito[i])
+                    carrito[i].count += 1
+                    localStorage.setItem('Compras', (JSON.stringify(carrito))); 
 
+                    console.log(carrito[i].count)
                     return
                 };
             };
@@ -121,11 +200,11 @@ function crearCuerpo(data){
             carrito.push(nombre);
             localStorage.setItem('Compras', (JSON.stringify(carrito))); 
         } else {
-            carrito.push(nombre)
+            console.log(carrito)
+            carrito.push(nombre);
             localStorage.setItem('Compras', (JSON.stringify(carrito)));
         }
-        p.textContent = 'Comprado';
-        console.log(carrito)
+        //p.textContent = 'Comprado';
 
     };
 
@@ -138,17 +217,29 @@ function crearCuerpo(data){
 
 
     for (let i = 0; i < imgs.length; i++) {
-        let newdocument = document.createElement('img');
-        newdocument.src = data.images[i];
-        newdocument.alt = data.description;
-        newdocument.classList.add('img-thumbnail');
-        newdocument.classList.add('hover-carrusel');
-        newdocument.style.borderRadius ="8px"
+        let imgSelect = document.createElement('img');
+        imgSelect.src = data.images[i];
+        imgSelect.alt = data.description;
+        imgSelect.classList.add('img-thumbnail');
+        imgSelect.classList.add('hover-carrusel');
+        imgSelect.style.borderRadius ="8px"
+        imgSelect.id = `img-${i}`
     
-        newdocument.addEventListener('click',()=>{
-           document.getElementById('carruselImg').innerHTML = `<img src="${data.images[i]}" alt="" style="width: 100%;border-radius: 5px;">`
+        imgSelect.addEventListener('click',()=>{
+            
+            slider.insertAdjacentElement('afterbegin', document.getElementById(`imagen-${i}`))
+            slider.style.marginLeft = '0%'
+            slider.style.transition = 'all 0.3s'
+            setTimeout(function(){
+                let sliderSection = document.querySelectorAll('.slider-section')
+                let sliderSectionLast = sliderSection[sliderSection.length-1]
+                slider.style.transition = '0.0s'
+                slider.insertAdjacentElement('afterbegin', sliderSectionLast)
+                slider.style.marginLeft = '-100%'
+            }, 500);
+
         })
-        document.getElementById('products-img').appendChild(newdocument);
+        document.getElementById('products-img').appendChild(imgSelect);
     };
     for (let i = 0; i < datos.relatedProducts.length; i++) {
         let divRelated = document.createElement('div')
@@ -157,7 +248,6 @@ function crearCuerpo(data){
         divRelated.addEventListener('click',()=>{
             localStorage.setItem('Product', datos.relatedProducts[i].id);
             window.location.reload()
-            console.log('tocastes'+ datos.relatedProducts[i].name, datos.relatedProducts[i].id)
         })
 
        let imageRelated = document.createElement('img');

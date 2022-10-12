@@ -1,29 +1,50 @@
 let container = document.getElementById('container-cart')
-
-let valorCarrito = JSON.parse(localStorage.getItem('Compras'))
+let tablaTotal = document.createElement('tr')
 
 fetch(CART_INFO_URL + '25801.json')
     .then(response => response.json())
     .then(data => {
-
         crearEncavezado();
 
-        valorCarrito.push(data.articles[0])
-        localStorage.setItem('Compras', (JSON.stringify(valorCarrito)));
-
-        if(localStorage.getItem('Compras') != null){
+        if(JSON.parse(localStorage.getItem('Compras')) == null || JSON.parse(localStorage.getItem('Compras')) == 0){
+            let valorCarrito = []
+            valorCarrito.push(data.articles[0])
+            localStorage.setItem('Compras', (JSON.stringify(valorCarrito)));
+        }else{
+            let valor = true
             for (let i = 0; i < JSON.parse(localStorage.getItem('Compras')).length; i++) {
-                agregar(JSON.parse(localStorage.getItem('Compras'))[i])
+                if(JSON.parse(localStorage.getItem('Compras'))[i].name != data.articles[0].name){   
+                    valor = false 
+                } else {
+                    valor = true
+                }
+            };
+
+            if (valor == false){
+                let valorCarrito = JSON.parse(localStorage.getItem('Compras'))
+                valorCarrito.push(data.articles[0])
+                localStorage.setItem('Compras', (JSON.stringify(valorCarrito)));
             };
         };
 
+
+        agregarProductos();
         evaluarTotal()
     });  
+
+function agregarProductos(){
+    if(localStorage.getItem('Compras') != null){
+        for (let i = 0; i < JSON.parse(localStorage.getItem('Compras')).length; i++) {
+            agregar(JSON.parse(localStorage.getItem('Compras'))[i], i)
+        };
+    };
+
+}
 
 function crearEncavezado(){
     let encavezado = document.createElement('div')
     encavezado.innerHTML = `
-        <div style='padding:30px;'>
+        <div style='padding:30px; max-width: 1100px; margin: auto;'>
             <h1 style="text-align: center;">Carrito de compras</h1>
             <div>
                 <h4>Artículos a comprar</h4>
@@ -36,15 +57,11 @@ function crearEncavezado(){
                         <th>Costos</th>
                         <th>Cantidad</th>
                         <th>Subtotal</th>
+                        <th> </th>
                     </tr>
                 </table>
             </div>
-            <div style="display: flex;justify-content: flex-end;margin-right: 10%;gap: 10px;">
-                <p style="font-weight: bold;">Total:</p>
-                <p> USD</p>
-                <p id='total'> </p>
-            </div>
-            <div style="border-top: solid 1px #CFD4DA;padding-top: 24px;">
+            <div style="padding-top: 24px;">
                 <h3>Tipo de envio</h3>
                 <div>
                     <div>
@@ -88,8 +105,7 @@ function crearEncavezado(){
     container.appendChild(encavezado)
 }
 
-function agregar(data){
-    let total = document.getElementById('total')
+function agregar(data, i){
 
     let td1 = document.createElement('td')
         let div = document.createElement('div')
@@ -117,8 +133,17 @@ function agregar(data){
         input.value = `${data.count}`
         input.style.maxWidth = '50px'
         input.addEventListener('click',()=>{    
-            if(input.value < 1) {return}
+            if(input.value < 0) {
+                input.value = 0
+                return
+            };
+
             p3.textContent = input.value * data.unitCost
+
+            let carrito = []
+            carrito = JSON.parse(localStorage.getItem('Compras'));
+            carrito[i].count = input.value
+            localStorage.setItem('Compras', (JSON.stringify(carrito)));
 
             evaluarTotal()
         });
@@ -139,10 +164,12 @@ function agregar(data){
                 p3.textContent = input.value * data.unitCost
             div2.appendChild(moneda)
             div2.appendChild(p3)
-            let div3 = document.createElement('div')
         div1.appendChild(div2)
-        div2.appendChild(div3)
     td5.appendChild(div1)
+
+    let td6 = document.createElement('td')
+        let div3 = document.createElement('div')
+        td6.appendChild(div3)
 
     let tr = document.createElement('tr')
         tr.style.borderBottom = 'solid 1px black'
@@ -151,15 +178,16 @@ function agregar(data){
     tr.appendChild(td3)
     tr.appendChild(td4)
     tr.appendChild(td5)
+    tr.appendChild(td6)
 
 
     let boton = document.createElement('button')
     boton.style = `
-        border: 0;
-        background-color: transparent;
-        margin-left: 15px;
-        color: red;`
-    boton.textContent = 'x'
+    border: solid white 1px;
+    background: red;margin-left:15px;
+    color: white;
+    border-radius: 5px;`
+    boton.textContent = 'Eliminar'
 
     boton.addEventListener('click',()=>{
         
@@ -180,28 +208,45 @@ function agregar(data){
                 <th>Costos</th>
                 <th>Cantidad</th>
                 <th>Subtotal</th>
+                <th> </th>
             </tr>`
-        for (let i = 0; i < JSON.parse(localStorage.getItem('Compras')).length; i++) {
-            agregar(JSON.parse(localStorage.getItem('Compras'))[i])
-        };
 
+        agregarProductos();
         evaluarTotal()
     });
     div3.appendChild(boton)
 
     let tabla = document.getElementById('contenido-tabla')
     tabla.appendChild(tr)
+
+
+    
+    document.getElementById('contenido-tabla').insertAdjacentElement('beforeend', tablaTotal)
 };
 
+
 function evaluarTotal() {
-    let dato = 0 
+
+    let valorTotal = 0 
         for (let i = 0; i < document.getElementsByClassName('p3').length; i++) {  
             if (document.getElementsByClassName('moneda')[i].textContent === 'UYU') {
-                dato = dato + parseInt(document.getElementsByClassName('p3')[i].textContent) / 40, 'ahora en dolares'
+                valorTotal += parseInt(document.getElementsByClassName('p3')[i].textContent) / 40 // transforma a dolares 'mas o menos'
             } else {
-                dato = dato + parseInt(document.getElementsByClassName('p3')[i].textContent)
+                valorTotal += parseInt(document.getElementsByClassName('p3')[i].textContent)
             };
         };
-    console.log(dato);
-    total.textContent = dato
+    console.log(valorTotal);
+
+    
+    tablaTotal.innerHTML =`
+    <tr>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> <div style='display:flex; gap:10px;'><p> Total: USD </p> <p>${valorTotal}</p></div> </td>
+    <td> </td>
+    </tr>`
+
+    
 };

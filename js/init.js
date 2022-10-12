@@ -96,6 +96,4 @@ if (localStorage.getItem('usuario')){
     })
 } else {
   liNav.innerHTML = `<a class="nav-link" href='./index.html' >iniciar secion</a>`;
-
-  hrefInicio.appendChild(redireccionInicio)
 };
