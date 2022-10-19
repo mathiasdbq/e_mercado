@@ -83,7 +83,7 @@ function crearEncavezado(){
                         <div>
                             <label for='calle-cart'>Calle</label>
                         </div>
-                        <img src="./img/alert_logo.svg" id='error-calle' style="display: none; translate:273px 26px;">
+                        <img src="./img/alert_logo.svg" id='error-calle' style="display: none;position: absolute;translate: 273px 2px;">
                         <input type="text" name="" id="calle-cart" style="width: 300px;">
                         <p style="color:red;margin: 0; display:none;" id="calle-cart-p">Ingresa una calle</p>
                         
@@ -92,7 +92,7 @@ function crearEncavezado(){
                         <div>
                             <label for='numero-cart'>Numero</label>
                         </div>
-                        <img src="./img/alert_logo.svg" id='error-numero' style="display: none; translate: 162px 26px;">
+                        <img src="./img/alert_logo.svg" id='error-numero' style="position: absolute;display: none;translate: 161px 2px;">
                         <input type="text" name="" id="numero-cart">
                         <p style="color:red;margin: 0; display:none;" id="numero-cart-p">Ingresa un número</p>
                         
@@ -101,7 +101,7 @@ function crearEncavezado(){
                         <div>
                             <label for='esquina-cart'>Esquina</label>
                         </div>
-                        <img src="./img/alert_logo.svg" id='error-esquina' style="display: none; translate:273px 26px;">
+                        <img src="./img/alert_logo.svg" id='error-esquina' style="display: none;position: absolute;translate: 273px 2px;">
                         <input type="text" name="" id="esquina-cart" style="width: 300px;">
                         <p style="color:red;margin: 0; display:none;" id="esquina-cart-p">Ingresa una esquina</p>
                         
@@ -256,40 +256,41 @@ function crearEncavezado(){
         };
 
         if(calleCart.value == '' || numeroCart.value == '' || esquinaCart.value == '' || seleccionDePago.textContent == ' No ha seleccionado ' ||document.querySelectorAll('td > input')[valorCero].value == 0){
+           
             if(calleCart.value == ''){
                 calleCart.style.border = 'solid red 1px'
                 document.getElementById('calle-cart-p').style.display = 'block'
+                document.getElementById('error-calle').style.display = 'block'
             } else {                
                 calleCart.style.border = 'solid grey 1px'
                 document.getElementById('calle-cart-p').style.display = 'none'
+                document.getElementById('error-calle').style.display = 'none'
             };
 
             if (numeroCart.value == ''){
                 numeroCart.style.border = 'solid red 1px'
                 document.getElementById('numero-cart-p').style.display = 'block'
-                document.getElementById('error-calle').style.display = 'block'
+                document.getElementById('error-numero').style.display = 'block'
             } else {
                 numeroCart.style.border = 'solid grey 1px'
                 document.getElementById('numero-cart-p').style.display = 'none'
-                document.getElementById('error-calle').style.display = 'none'
+                document.getElementById('error-numero').style.display = 'none'
             };
 
             if(esquinaCart.value == ''){
                 esquinaCart.style.border = 'solid red 1px'
                 document.getElementById('esquina-cart-p').style.display = 'block'
-                document.getElementById('error-numero').style.display = 'block'
+                document.getElementById('error-esquina').style.display = 'block'
             } else {
                 esquinaCart.style.border = 'solid grey 1px'
                 document.getElementById('esquina-cart-p').style.display = 'none'
-                document.getElementById('error-numero').style.display = 'none'
+                document.getElementById('error-esquina').style.display = 'none'
             };
 
             if (seleccionDePago.textContent == ' No ha seleccionado ') {
                 document.getElementById('seleccion-de-pago-p').style.display = 'block'
-                document.getElementById('error-esquina').style.display = 'block'
             }else{
                 document.getElementById('seleccion-de-pago-p').style.display = 'none'
-                document.getElementById('error-esquina').style.display = 'none'
             };
 
         } else { 
