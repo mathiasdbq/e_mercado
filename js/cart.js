@@ -1,7 +1,7 @@
 let container = document.getElementById('container-cart')
 let tablaTotal = document.createElement('tr')
-
-fetch(CART_INFO_URL + '25801.json')
+const idUsuario = '25801'
+fetch(CART_INFO_URL + idUsuario +'.json')
     .then(response => response.json())
     .then(data => {
         crearEncavezado();
@@ -77,8 +77,8 @@ function crearEncavezado(){
                         <label for="5%">Standard 12 a 15 dias(5%)</label>
                     </div>
                 </div>
-                <h3>Direccion de envio</h3>
-                <div style="max-width: 520px; display: flex; flex-wrap: wrap; gap: 31px;">
+                <h3 style="margin-top: 30px;">Direccion de envio</h3>
+                <div style=" max-width: 520px; display: flex; flex-wrap: wrap; gap: 31px;">
                     <div>
                         <div>
                             <label for='calle-cart'>Calle</label>

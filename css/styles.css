@@ -463,3 +463,19 @@ input.star:hover ~ label{
     max-width: 450px;
     max-height: 500px;
 }
+
+.inputs-container{
+  padding: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding-bottom: 90px;
+}
+.inputs-container>div{
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+#primer-nombre::placeholder,#primer-apellido::placeholder,#email-input::placeholder { color: red; }

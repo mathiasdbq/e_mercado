@@ -177,10 +177,19 @@ function crearCuerpo(data){
     if(localStorage.getItem('Compras') != null)
     {carrito = JSON.parse(localStorage.getItem('Compras'));}
 
+    let p = document.createElement('p');
+    p.textContent = 'Comprar';
+
     function agregarCarrito(){
         let nombre = data.name
         nombre = new Compras (`${data.currency}`,`${imgs[0]}`,`${data.name}`,`${data.cost}`, 1)
 
+        p.innerHTML = `✔`
+        div.style = 'border-radius:50px; width:41px; margin-right:70px;'
+        setTimeout(function() { 
+            p.textContent = 'Comprar';
+            div.style = 'border-radius: 8px;'
+        },500);
 
         if(localStorage.getItem('Compras') != null){
             for (let i = 0; i < JSON.parse(localStorage.getItem('Compras')).length; i++) {
@@ -204,12 +213,8 @@ function crearCuerpo(data){
             carrito.push(nombre);
             localStorage.setItem('Compras', (JSON.stringify(carrito)));
         }
-        //p.textContent = 'Comprado';
 
     };
-
-    let p = document.createElement('p');
-    p.textContent = 'Comprar';
 
     let divEncavezado = document.getElementById('encavezado');
     divEncavezado.appendChild(div);
